@@ -1,0 +1,31 @@
+# OS and editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Generated outputs
+dist/
+build/
+out/
+coverage/
+.tmp/
+tmp/
+.cache/
+
+# Logs
+*.log
+logs/
+
+# Node/Python tooling if docs automation is added later
+node_modules/
+.venv/
+__pycache__/
+*.pyc
