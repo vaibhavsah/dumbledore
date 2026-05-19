@@ -117,14 +117,34 @@ Avoid Go when the domain benefits heavily from mature enterprise frameworks, dyn
 - Expose health checks.
 - Configure timeouts and connection pools.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] Goroutine lifecycle is owned.
-- [ ] Context cancellation is propagated.
-- [ ] Errors are handled and classified.
-- [ ] Shared state is safe.
-- [ ] Tests cover concurrency and failure paths.
-- [ ] Observability exists for critical flows.
+- [ ] Package, handler, service, repository, adapter, worker, and internal boundaries are clear.
+- [ ] Go idioms are followed: simple composition, explicit errors, small interfaces, and context propagation.
+- [ ] Goroutine lifecycle is owned and cancellation paths are clear.
+- [ ] Shared mutable state is synchronized or avoided.
+- [ ] API and integration code uses validation, deadlines, and explicit retry/idempotency behavior.
+- [ ] Security checks cover input validation, secrets, auth, and sensitive logging.
+- [ ] Tests cover business logic, adapters, concurrency, cancellation, timeouts, and failure paths.
+- [ ] Performance risks are checked: goroutine leaks, allocation-heavy hot paths, lock contention, and unbounded queues.
+- [ ] Observability includes structured logs, metrics, traces, queue depth, and dependency signals.
+- [ ] Maintainability is protected from Java-style OOP, excessive interfaces, and magic frameworks.
+- [ ] AI-generated code is checked for ignored errors, fake APIs, and hidden concurrency.
+
+## Code Review Red Flags
+
+- Goroutine leaks or goroutines started without ownership.
+- Ignored errors.
+- Shared mutable state without synchronization.
+- Context misuse, missing deadlines, or lost cancellation.
+- Channels used without clear close/backpressure semantics.
+- Interfaces created before a consumer needs them.
+- Retry loops without idempotency or backoff.
+- Missing race-sensitive tests.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated Go code must be reviewed for hallucinated APIs, fake library methods, inconsistent package patterns, over-abstraction through unnecessary interfaces, missing tests, missing failure handling, insecure defaults, ignored errors, and architectural drift through hidden concurrency.
 
 # Common Anti-Patterns
 
@@ -162,4 +182,3 @@ internal/
     config/
     observability/
 ```
-

@@ -118,14 +118,34 @@ Avoid Node.js for CPU-heavy workloads unless offloaded to workers or separate se
 - Handle SIGTERM correctly.
 - Ensure workers stop safely.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] Routes are thin and validated.
-- [ ] Async concurrency is bounded.
-- [ ] Timeouts and retries are explicit.
-- [ ] Business logic is in the correct module.
-- [ ] Tests cover failure paths.
-- [ ] Observability is present.
+- [ ] Route, controller, service, repository, adapter, worker, and shared module boundaries are clear.
+- [ ] Node.js/TypeScript idioms are followed: async flows are explicit, promises are handled, and runtime config is validated.
+- [ ] Business logic is not in routes, middleware, or BFF orchestration unless intentionally scoped.
+- [ ] External inputs are validated and mapped to typed DTOs.
+- [ ] Timeouts, retries, idempotency, and concurrency limits are explicit.
+- [ ] Security checks cover auth, authorization, secrets, dependency risk, and sensitive data handling.
+- [ ] Tests cover validators, domain logic, API contracts, adapters, workers, and failure paths.
+- [ ] Performance risks are checked: event-loop blocking, unbounded `Promise.all`, payload size, and connection pressure.
+- [ ] Observability includes structured logs, request IDs, metrics, traces, and queue/dependency signals.
+- [ ] Maintainability is protected from giant apps, hidden coupling, and config sprawl.
+- [ ] AI-generated code is checked for fake package APIs, missing awaits, and unsafe async shortcuts.
+
+## Code Review Red Flags
+
+- Unbounded async concurrency.
+- Missing input validation.
+- Business logic in routes.
+- No timeout, retry, or idempotency policy for external calls.
+- Rejected promises not handled.
+- Blocking CPU work on the event loop.
+- Hardcoded configs or secrets.
+- Giant Express/Nest/Fastify modules with unclear boundaries.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated Node.js code must be reviewed for hallucinated library APIs, fake middleware methods, inconsistent project patterns, over-abstraction, missing tests, missing failure handling, insecure defaults, unbounded async behavior, and architectural drift into routes or BFFs.
 
 # Common Anti-Patterns
 
@@ -165,4 +185,3 @@ src/
     http/
     observability/
 ```
-

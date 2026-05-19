@@ -125,14 +125,33 @@ flowchart LR
 - Include runbooks for dependency outages.
 - Monitor integration health after release.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] Middleware does not own core business logic.
-- [ ] Contracts are explicit.
-- [ ] Timeouts, retries, and idempotency are defined.
-- [ ] Dead-letter handling exists where queues are used.
-- [ ] Distributed tracing is present.
-- [ ] Failure modes and runbooks are documented.
+- [ ] Middleware, BFF, workflow, adapter, queue, and domain-service boundaries are clear.
+- [ ] Middleware does not own core business logic or become the hidden system of record.
+- [ ] Contracts, transformations, routing, orchestration, and dependency calls are explicit.
+- [ ] Timeouts, retries, backoff, idempotency, circuit breaking, and dead-letter handling are defined.
+- [ ] Security checks cover credential scope, trust boundaries, sensitive payloads, and auditability.
+- [ ] Tests cover contracts, retries, duplicate messages, dead-letter behavior, dependency failure, and replay.
+- [ ] Performance risks are checked: synchronous chains, retry storms, queue backlog, large payloads, and bottlenecks.
+- [ ] Observability includes distributed tracing, correlation IDs, queue depth, retry counts, DLQ counts, and dependency latency.
+- [ ] Maintainability is protected from hidden orchestration and central business monolith behavior.
+- [ ] AI-generated middleware is checked for fake integration APIs, missing idempotency, and unsafe retry logic.
+
+## Code Review Red Flags
+
+- Retry storms.
+- Missing idempotency.
+- Hidden orchestration logic.
+- No dead-letter queue or replay process.
+- No correlation IDs across calls/events.
+- Synchronous dependency chains across many systems.
+- Shared mutable state in middleware.
+- Middleware accumulating core business decisions.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated middleware code must be reviewed for hallucinated APIs, fake library methods, inconsistent integration patterns, over-abstraction, missing tests, missing failure handling, insecure defaults, missing idempotency, unsafe retries, and architectural drift into business logic.
 
 # Common Anti-Patterns
 
@@ -169,4 +188,3 @@ middleware/
   observability/
   runbooks/
 ```
-

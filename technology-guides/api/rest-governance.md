@@ -120,14 +120,33 @@ flowchart LR
 - Use backward-compatible rollout where possible.
 - Track API errors after deploy.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] Resource naming is consistent.
-- [ ] Request and response schemas are explicit.
-- [ ] Error contract is consistent.
-- [ ] Auth and authorization are enforced.
-- [ ] Pagination and filtering are bounded.
-- [ ] Contract tests exist for important APIs.
+- [ ] Resource boundaries, ownership, commands, and URL naming are consistent with project API standards.
+- [ ] REST idioms are followed without drifting into arbitrary RPC endpoints.
+- [ ] Request, response, validation, pagination, filtering, sorting, and error schemas are explicit.
+- [ ] Auth, authorization, tenant isolation, and sensitive field exposure are reviewed.
+- [ ] Idempotency, retries, conflict handling, and backward compatibility are defined where needed.
+- [ ] Tests cover contract behavior, validation errors, auth failures, idempotency, and compatibility-sensitive paths.
+- [ ] Performance risks are checked: unbounded collections, expensive filters, large payloads, and chatty client flows.
+- [ ] Observability includes endpoint metrics, status/error codes, request IDs, and dependency traces.
+- [ ] Maintainability is protected through consistent DTOs, versioning, and documented conventions.
+- [ ] AI-generated API code is checked for invented conventions, inconsistent status codes, and missing contract tests.
+
+## Code Review Red Flags
+
+- Inconsistent status codes.
+- Breaking changes without versioning or migration path.
+- Non-idempotent operations retried by clients.
+- Weak or missing pagination.
+- Database schema leaked in API shape.
+- Error responses that vary by endpoint.
+- Authorization checked only in the UI.
+- Unbounded filtering, sorting, or response payloads.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated REST code must be reviewed for hallucinated framework APIs, fake library methods, inconsistent route conventions, over-abstraction, missing tests, missing failure handling, insecure defaults, non-idempotent retry behavior, and architectural drift from resource-oriented contracts.
 
 # Common Anti-Patterns
 
@@ -160,4 +179,3 @@ GET /customers/{customerId}
 PATCH /customers/{customerId}
 POST /invoices/{invoiceId}/approve
 ```
-

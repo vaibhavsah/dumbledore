@@ -125,14 +125,35 @@ flowchart LR
 - Validate build-time and runtime variables.
 - Include smoke checks for core routes after deploy.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] Component boundaries are clear.
-- [ ] Business logic is not buried in UI.
-- [ ] State ownership is appropriate.
-- [ ] API errors and permissions are handled.
-- [ ] Accessibility and critical tests are present.
-- [ ] Performance risks are understood.
+- [ ] Feature, route, component, hook, API client, and view-model boundaries are clear.
+- [ ] React idioms are followed: stable keys, controlled effects, predictable render flow, and no state mutation.
+- [ ] Business logic is not buried in JSX or presentational components.
+- [ ] State ownership is appropriate: local UI state, server state, and shared client state are separated.
+- [ ] API integration handles loading, empty, error, permission, retry, and stale-data states.
+- [ ] Security-sensitive behavior is enforced on the backend, not only in the UI.
+- [ ] Accessibility is reviewed for forms, keyboard flow, focus, labels, dialogs, and error messages.
+- [ ] Tests cover critical component states, hooks, API integration behavior, and user flows.
+- [ ] Performance risks are checked: excessive rerendering, broad context updates, expensive effects, and large bundles.
+- [ ] Observability exists for frontend errors and important failed user interactions.
+- [ ] Maintainability is preserved through small components, clear naming, and limited custom hooks.
+- [ ] AI-generated code is checked for fake APIs, inconsistent project patterns, missing states, and over-abstracted hooks.
+
+## Code Review Red Flags
+
+- Unstable list keys or index keys for mutable collections.
+- Effect misuse, missing dependencies, or effects used for derivable state.
+- Excessive rerendering from broad context, unstable callbacks, or object props.
+- Business logic in components instead of domain/application utilities.
+- Inaccessible UI states, dialogs, controls, or form errors.
+- Giant global stores or context used as a general-purpose state container.
+- API responses rendered directly without mapping or error handling.
+- Custom hooks that hide side effects, permissions, or network behavior.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated React code must be reviewed for hallucinated component APIs, fake library methods, inconsistent design-system usage, over-abstraction, missing loading/error/empty states, missing tests, missing accessibility behavior, insecure client-side authorization assumptions, and architectural drift from feature boundaries.
 
 # Common Anti-Patterns
 
@@ -176,4 +197,3 @@ src/
     api/
     config/
 ```
-

@@ -122,14 +122,34 @@ flowchart LR
 - Monitor resolver errors after deploy.
 - Include query complexity limits in production config.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] GraphQL is justified over REST.
-- [ ] Schema ownership is clear.
-- [ ] Resolvers are thin.
-- [ ] N+1 prevention exists.
-- [ ] Authorization is enforced per field/object where needed.
-- [ ] Query limits and observability are configured.
+- [ ] GraphQL is justified for the changed API surface and schema ownership is clear.
+- [ ] Schema, resolver, loader, service, and backend integration boundaries are explicit.
+- [ ] Resolvers are thin and do not bypass domain services or authorization policy.
+- [ ] N+1 prevention, batching, caching, and query complexity limits are implemented where needed.
+- [ ] Field/object authorization, tenant isolation, and sensitive data exposure are reviewed.
+- [ ] Mutations have consistent input, error, idempotency, and side-effect behavior.
+- [ ] Tests cover schema contracts, resolvers, auth behavior, nested query performance, and deprecations.
+- [ ] Performance risks are checked: massive nested queries, unlimited depth, slow resolvers, and backend fan-out.
+- [ ] Observability includes operation names, resolver latency, query complexity, errors, and traces.
+- [ ] Maintainability is protected from schema bloat, uncontrolled federation, and direct DB exposure.
+- [ ] AI-generated GraphQL code is checked for fake schema/resolver APIs and missing auth/performance controls.
+
+## Code Review Red Flags
+
+- N+1 queries.
+- Unlimited query depth or complexity.
+- Auth gaps in resolvers or nested fields.
+- Schema bloat with unclear ownership.
+- Direct database exposure through resolvers.
+- Massive nested queries without loader strategy.
+- Federation changes without ownership and compatibility review.
+- Internal errors exposed through GraphQL responses.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated GraphQL code must be reviewed for hallucinated APIs, fake resolver methods, inconsistent schema conventions, over-abstraction, missing tests, missing failure handling, insecure defaults, missing query limits, and architectural drift around schema ownership.
 
 # Common Anti-Patterns
 
@@ -164,4 +184,3 @@ loaders/
 services/
   customer.service.ts
 ```
-

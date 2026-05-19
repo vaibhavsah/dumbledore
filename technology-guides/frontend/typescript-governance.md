@@ -109,14 +109,34 @@ Do not treat TypeScript as a substitute for runtime validation, domain modeling,
 - Generated types must be reproducible.
 - Runtime validation changes should be release-reviewed.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] Strict typing is preserved.
-- [ ] No unjustified `any` or unsafe casts.
-- [ ] DTOs do not leak persistence models.
-- [ ] Runtime validation exists at trust boundaries.
-- [ ] Shared types are small and owned.
-- [ ] Error types are actionable.
+- [ ] Type boundaries are clear between domain models, DTOs, API contracts, persistence models, and UI view models.
+- [ ] TypeScript idioms are followed: strict mode, discriminated unions where useful, and explicit public API types.
+- [ ] `any`, `unknown`, non-null assertions, and casts are isolated, justified, and not hiding correctness problems.
+- [ ] Runtime validation exists at trust boundaries and is tested.
+- [ ] API typing includes success, validation, authorization, conflict, and dependency error cases where callers need behavior.
+- [ ] Security-sensitive data is not widened, logged, or exposed through shared types.
+- [ ] Tests cover DTO/domain mappers, validation schemas, and contract-sensitive behavior.
+- [ ] Performance and build risks from generated types or excessive generic complexity are understood.
+- [ ] Observability preserves typed error categories where operationally useful.
+- [ ] Maintainability is protected by small owned contract packages and understandable generics.
+- [ ] AI-generated code is checked for unsafe casts, fake library types, and type silencing.
+
+## Code Review Red Flags
+
+- `any` used across business-critical paths.
+- Unsafe casts that bypass validation or authorization logic.
+- DTO/domain/persistence model confusion.
+- Weak or missing runtime validation for external input.
+- Giant shared types imported across unrelated domains.
+- Over-engineered generics that reduce readability.
+- Type errors silenced instead of fixed.
+- Database models exposed as API contracts.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated TypeScript must be reviewed for hallucinated APIs, fake library methods, inconsistent project type patterns, over-abstraction with generics, missing runtime validation, missing tests, insecure type assumptions, unsafe casts, and architectural drift through shared types.
 
 # Common Anti-Patterns
 
@@ -153,4 +173,3 @@ src/
     result.ts
     errors.ts
 ```
-

@@ -53,6 +53,25 @@ These guides define:
 - AI coding assistants use them as prompt context before generating code.
 - Project repositories copy or reference the relevant guidance, then store project-specific decisions locally.
 
+## Relationship With Code Review Agent
+
+Technology guides are mandatory inputs for stack-specific code reviews. The Code Review Agent is responsible for detecting the changed stack, selecting the relevant guides, and applying them alongside Dumbledore principles, governance checklists, project HLDs, LLDs, ADRs, and PR context.
+
+Technology guides provide stack-specific rules. `agents/code-review-agent.md` provides the review process, source resolution model, severity model, and output format. `prompts/code-review-prompts.md` executes the workflow in ChatGPT, Codex, Cursor, Claude, Windsurf, and future AI-assisted review tools.
+
+| Technology Area | Guide | Used For |
+| --- | --- | --- |
+| React | `frontend/react-governance.md` | UI architecture, hooks, state, performance, accessibility. |
+| Angular | `frontend/angular-governance.md` | Module boundaries, RxJS, DI, enterprise frontend patterns. |
+| TypeScript | `frontend/typescript-governance.md` | Typing, DTOs, contracts, unsafe casts. |
+| Java | `backend/java-governance.md` | Backend architecture, transactions, service boundaries. |
+| Node.js | `backend/nodejs-governance.md` | BFF/API services, async safety, validation. |
+| Go | `backend/golang-governance.md` | Concurrency, services, workers. |
+| Python | `backend/python-governance.md` | FastAPI, AI services, scripting vs production. |
+| REST | `api/rest-governance.md` | Resource APIs, error contracts, compatibility. |
+| GraphQL | `api/graphql-governance.md` | Schema, resolvers, query complexity. |
+| Middleware | `platform/middleware-governance.md` | Orchestration, integration, retries, idempotency. |
+
 ## Governance Flow
 
 ```mermaid
@@ -78,4 +97,3 @@ flowchart TD
 - Document exceptions in project ADRs.
 - Keep project-specific architecture, code, and decisions out of Dumbledore.
 - Ask AI assistants to cite the guide used and list assumptions before implementation.
-

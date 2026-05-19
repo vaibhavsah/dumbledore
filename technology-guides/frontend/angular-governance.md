@@ -113,14 +113,34 @@ Avoid Angular when the product needs a very small interactive surface, the team 
 - Use route smoke tests.
 - Monitor error rate and failed API calls after deploy.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] Feature boundary is clear.
-- [ ] No business logic in templates.
-- [ ] RxJS streams terminate safely.
-- [ ] Services are cohesive.
-- [ ] API errors and auth states are handled.
-- [ ] Tests cover critical behavior.
+- [ ] Feature, route, component, service, facade, and shared-library boundaries are clear.
+- [ ] Angular idioms are followed: DI is explicit, templates are declarative, and standalone/module patterns match the project.
+- [ ] Business logic is not in templates or god services.
+- [ ] RxJS streams have safe lifecycle management, error handling, and bounded subscriptions.
+- [ ] API integration uses typed clients, DTO mapping, and consistent error handling.
+- [ ] Security-sensitive checks are enforced on the backend, with route guards used only as UX controls.
+- [ ] Tests cover services, validators, critical components, routing behavior, and observable error paths.
+- [ ] Performance risks are checked: heavy template expressions, unnecessary change detection, missing lazy loading, and large bundles.
+- [ ] Observability exists for route failures, frontend exceptions, and failed API calls.
+- [ ] Maintainability is preserved through cohesive services and limited shared mutable state.
+- [ ] AI-generated code is checked for fake Angular APIs, uncontrolled subscriptions, and project-inconsistent patterns.
+
+## Code Review Red Flags
+
+- Uncontrolled subscriptions or missing lifecycle-safe unsubscribe patterns.
+- God services that own unrelated workflow, API, and state logic.
+- Logic-heavy templates or expensive template expressions.
+- Module, route, or shared-library boundary leaks.
+- Shared mutable state across unrelated features.
+- Excessive inheritance or framework magic hiding behavior.
+- API calls directly from components when the project uses facades/services.
+- Missing tests for observable error paths.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated Angular code must be reviewed for hallucinated Angular APIs, fake RxJS operators, uncontrolled subscriptions, inconsistent standalone/module patterns, over-abstracted services, missing tests, missing error handling, insecure route-guard assumptions, and architectural drift across feature boundaries.
 
 # Common Anti-Patterns
 
@@ -159,4 +179,3 @@ src/app/
     ui/
     http/
 ```
-

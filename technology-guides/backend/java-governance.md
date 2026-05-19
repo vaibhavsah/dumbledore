@@ -123,14 +123,34 @@ flowchart LR
 - Provide health, readiness, and liveness endpoints where appropriate.
 - Document rollback and forward-fix paths.
 
-# Code Review Checklist
+## Code Review Checklist
 
-- [ ] Domain and application boundaries are clear.
-- [ ] Transactions are explicit and safe.
-- [ ] API DTOs do not expose persistence entities.
-- [ ] Tests cover domain, persistence, and API contracts.
-- [ ] Observability and operational ownership are present.
-- [ ] Framework magic does not hide critical behavior.
+- [ ] Controller, application service, domain, repository, adapter, and integration boundaries are clear.
+- [ ] Java/Spring idioms are used intentionally without hiding critical behavior behind framework magic.
+- [ ] Transactions are explicit, correctly scoped, and do not leak across remote calls or unrelated domain operations.
+- [ ] API DTOs do not expose JPA entities or persistence internals.
+- [ ] Security checks are enforced at backend boundaries and include method/resource authorization where needed.
+- [ ] Error handling maps domain, validation, authorization, conflict, and dependency errors consistently.
+- [ ] Tests cover domain logic, transactions, persistence behavior, API contracts, and failure paths.
+- [ ] Performance risks are checked: N+1 queries, lazy loading surprises, connection pool pressure, and inefficient batch work.
+- [ ] Observability includes structured logs, metrics, traces, and correlation IDs for critical flows.
+- [ ] Maintainability is protected from god services, excessive abstraction, and anemic domain drift.
+- [ ] AI-generated code is checked for fake Spring APIs, unsafe annotations, missing tests, and DTO/entity leakage.
+
+## Code Review Red Flags
+
+- Transactional leaks across network calls or broad service methods.
+- God services coordinating unrelated domains.
+- Repository abuse with business logic in persistence queries.
+- DTO/entity leakage across API boundaries.
+- Hidden framework magic controlling security, transactions, or data loading.
+- Anemic domain models with rules scattered across services.
+- Shared database access across independently owned services.
+- Missing integration tests for transaction or persistence behavior.
+
+## AI Coding Assistant Review Guardrails
+
+AI-generated Java code must be reviewed for hallucinated Spring APIs, fake annotations, inconsistent package conventions, over-abstraction, missing tests, missing transaction/error handling, insecure defaults, DTO/entity leakage, and architectural drift across domain modules.
 
 # Common Anti-Patterns
 
@@ -169,4 +189,3 @@ src/main/java/com/company/app/
     security/
     observability/
 ```
-
