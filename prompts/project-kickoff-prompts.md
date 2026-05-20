@@ -22,6 +22,17 @@ related_documents:
 
 Use these prompts when starting a new product or major product area. Replace bracketed values with project-specific context.
 
+## Decision Independence Clause
+
+For kickoff prompts that influence architecture, repository strategy, infrastructure, or stack selection, include:
+
+```text
+Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference. Treat user preference as input, not decision.
+```
+
+Kickoff outputs should separate user preference, architectural evidence, decision rationale, and unresolved risks.
+
+
 ## Product Discovery
 
 | Field | Detail |
@@ -35,7 +46,7 @@ Act as the Dumbledore Architecture Governance Agent. Help discover the product c
 Known context:
 [paste product notes]
 
-Ask clarifying questions first if needed. Then produce:
+Ask clarifying questions first if needed. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives where decisions are implied. Recommend based on rationale, not preference. Then produce:
 - product goal
 - target users
 - core workflows
@@ -179,7 +190,7 @@ Assess team, budget, and timeline constraints for [project].
 Context:
 [team size, skills, budget, deadlines]
 
-Recommend architecture choices that fit the team's operational capability. Call out choices that are too expensive or operationally risky.
+Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference. Recommend architecture choices that fit the team's operational capability. Call out choices that are too expensive or operationally risky.
 ```
 
 ## Compliance And Security Discovery
@@ -208,7 +219,7 @@ When to use: before creating project repositories.
 Expected output: repo model, ownership, docs locations.
 
 ```text
-Recommend an initial repository strategy for [project].
+Recommend an initial repository strategy for [project]. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference.
 
 Assume project-specific HLDs, LLDs, ADRs, and implementation docs must live in the project repo. Dumbledore is only reusable governance.
 
@@ -227,7 +238,7 @@ When to use: after MVP scope and constraints are known.
 Expected output: MVP architecture, scale-stage roadmap, ADR list.
 
 ```text
-Create an initial architecture roadmap for [project].
+Create an initial architecture roadmap for [project]. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference.
 
 Separate:
 - MVP architecture
