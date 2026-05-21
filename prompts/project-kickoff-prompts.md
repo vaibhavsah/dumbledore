@@ -222,6 +222,14 @@ Expected output: repo model, ownership, docs locations.
 Recommend an initial repository strategy for [project]. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference.
 
 Assume project-specific HLDs, LLDs, ADRs, and implementation docs must live in the project repo. Dumbledore is only reusable governance.
+Apply Dumbledore's repository governance checklist before recommending repository creation or setup changes.
+
+Repository governance requirements:
+- do not commit or push directly to main
+- if currently on main, update main from origin before creating a working branch
+- create a separate working branch unless I explicitly provide one
+- protect main in every new repository so merging requires a pull request
+- add .github/CODEOWNERS with @vaibhavsah as the default owner unless I explicitly provide another owner
 
 Produce:
 - recommended repos
@@ -248,4 +256,3 @@ Separate:
 - risks to monitor
 - review checkpoints
 ```
-

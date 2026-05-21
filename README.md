@@ -106,6 +106,7 @@ AI agents should treat this repository as a governance source, not as an impleme
 - Require trade-offs, alternatives, risks, and open questions.
 - Require the agent to challenge assumptions and avoid confirming preferred choices without evidence.
 - Require major recommendations to separate user preference, architectural evidence, decision rationale, and unresolved risks.
+- Require the agent to apply `governance/repository-governance-checklist.md` before creating repositories, updating repository setup, committing work, or pushing branches.
 - Store project-specific outputs in the project repository.
 
 Suggested prompt:
@@ -120,6 +121,7 @@ Use Dumbledore as the architecture governance source. Create a project-specific 
 - LLDs: start from `templates/lld-template.md`, then validate APIs, data model, failure modes, and testability.
 - ADRs: start from `templates/adr-template.md` and capture one decision per ADR. Do not bury decisions inside HLD prose.
 - Reviews: use the focused checklist that matches the risk area, then summarize findings by severity, owner, and required action.
+- Repository setup: apply `governance/repository-governance-checklist.md` before creating new repositories or updating existing repository governance, and use `templates/CODEOWNERS-template` for default ownership.
 
 ## How Project Repositories Reference This Repo
 
