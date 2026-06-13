@@ -37,6 +37,42 @@ This repository is not project-specific. It defines principles, templates, check
 - Optimize for maintainability, developer productivity, operational excellence, cost-awareness, and security.
 - Make documents useful to both humans and AI agents through consistent metadata, headings, checklists, and examples.
 
+## Decision Independence Policy
+
+Dumbledore acts as an architecture governance authority, not a confirmation engine. User preference is input, not decision. It treats proposed technologies, architecture styles, repository structures, infrastructure choices, and implementation preferences as context to evaluate, not instructions to accept.
+
+Dumbledore should acknowledge proposed choices, compare reasonable alternatives, state trade-offs, challenge weak assumptions, reject overengineering, reject underengineering, and recommend the option with the strongest rationale. It should remain professional, direct, evidence-led, and governance-oriented.
+
+## Technology Decision Evaluation Framework
+
+| Dimension | Questions |
+|---|---|
+| Product Fit | Does this solve the actual product need? |
+| Team Fit | Can the team build and operate it? |
+| Complexity | Does it add unnecessary moving parts? |
+| Maintainability | Will this be understandable in 12 months? |
+| Scalability | Does it match realistic load expectations? |
+| Security | Does it support secure defaults? |
+| Operations | Can it be deployed, monitored, debugged, and rolled back? |
+| Cost | What is the infra, licensing, and engineering cost? |
+| Ecosystem | Is the ecosystem mature and supportable? |
+| Evolution | Can we migrate away or evolve later? |
+
+## Recommendation Format
+
+For every major recommendation, Dumbledore should output:
+
+1. User Preference
+2. Dumbledore Assessment
+3. Alternatives Considered
+4. Trade-off Table
+5. Decision
+6. Why This Decision
+7. What Would Change This Decision Later
+8. Risks
+9. ADR Required: Yes/No
+
+
 ## Repository Map
 
 | Area | Purpose |
@@ -68,12 +104,15 @@ AI agents should treat this repository as a governance source, not as an impleme
 - Require the agent to separate assumptions from facts.
 - Require MVP and scale-stage recommendations to be different sections.
 - Require trade-offs, alternatives, risks, and open questions.
+- Require the agent to challenge assumptions and avoid confirming preferred choices without evidence.
+- Require major recommendations to separate user preference, architectural evidence, decision rationale, and unresolved risks.
+- Require the agent to apply `governance/repository-governance-checklist.md` before creating repositories, updating repository setup, committing work, or pushing branches.
 - Store project-specific outputs in the project repository.
 
 Suggested prompt:
 
 ```text
-Use Dumbledore as the architecture governance source. Create a project-specific HLD for <system>. Apply the architecture principles, SaaS playbook, API checklist, observability checklist, security checklist, and relevant anti-patterns. Keep technology choices as options unless already decided. Store the final document in this project repo, not in Dumbledore.
+Use Dumbledore as the architecture governance source. Create a project-specific HLD for <system>. Apply the architecture principles, SaaS playbook, API checklist, observability checklist, security checklist, and relevant anti-patterns. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference. Keep technology choices as options unless already decided. Store the final document in this project repo, not in Dumbledore.
 ```
 
 ## Creating HLDs, LLDs, ADRs, And Reviews
@@ -82,6 +121,7 @@ Use Dumbledore as the architecture governance source. Create a project-specific 
 - LLDs: start from `templates/lld-template.md`, then validate APIs, data model, failure modes, and testability.
 - ADRs: start from `templates/adr-template.md` and capture one decision per ADR. Do not bury decisions inside HLD prose.
 - Reviews: use the focused checklist that matches the risk area, then summarize findings by severity, owner, and required action.
+- Repository setup: apply `governance/repository-governance-checklist.md` before creating new repositories or updating existing repository governance, and use `templates/CODEOWNERS-template` for default ownership.
 
 ## How Project Repositories Reference This Repo
 

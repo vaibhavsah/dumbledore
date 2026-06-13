@@ -25,6 +25,17 @@ related_documents:
 
 Each prompt should be run with project context, existing ADRs, and relevant Dumbledore documents.
 
+## Decision Independence Prompt Clause
+
+Use this clause in any prompt that asks for an HLD, ADR, technology choice, architecture style, repository strategy, infrastructure strategy, or stack recommendation:
+
+```text
+Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference. Treat user preference as input, not decision.
+```
+
+Major recommendations must use the Recommendation Format from `agents/architecture-governance-agent.md`: User Preference, Dumbledore Assessment, Alternatives Considered, Trade-off Table, Decision, Why This Decision, What Would Change This Decision Later, Risks, and ADR Required: Yes/No.
+
+
 ## System Context
 
 When to use: before HLD creation.
@@ -60,7 +71,7 @@ Create an MVP HLD for [project] using Dumbledore HLD standards.
 Context:
 [paste product scope, constraints, system context]
 
-Prefer simple, evolvable architecture. Explain trade-offs. Avoid premature microservices.
+Prefer simple, evolvable architecture. Explain trade-offs. Avoid premature microservices. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference.
 ```
 
 ## Scale-Stage HLD
@@ -113,7 +124,7 @@ Draft an ADR for this decision: [decision].
 Context:
 [paste context and options]
 
-Use one decision per ADR. Include options, rationale, consequences, operational impact, security impact, cost impact, and review triggers.
+Use one decision per ADR. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference. Include options, rationale, rejected options, consequences, operational impact, security impact, cost impact, and review triggers.
 ```
 
 ## Bounded Context Analysis
@@ -147,7 +158,7 @@ Review focus: consumer needs, compatibility, auth, observability.
 ```text
 Define the API strategy for [project/feature].
 
-Prefer REST unless GraphQL or gRPC is justified. Include endpoints, request/response shape, errors, auth, versioning, idempotency, and contract tests.
+Prefer REST unless GraphQL or gRPC is justified. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference. Include endpoints, request/response shape, errors, auth, versioning, idempotency, and contract tests.
 ```
 
 ## Database Strategy
@@ -189,7 +200,7 @@ Review focus: managed services, cost, team capability.
 ```text
 Define infrastructure strategy for [project].
 
-Prefer managed infrastructure unless self-hosting is justified. Avoid Kubernetes unless operationally justified. Include deployment, environments, secrets, networking, monitoring, cost, and ownership.
+Prefer managed infrastructure unless self-hosting is justified. Avoid Kubernetes unless operationally justified. Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference. Include deployment, environments, secrets, networking, monitoring, cost, and ownership.
 ```
 
 ## Observability Strategy
@@ -243,3 +254,31 @@ Return:
 - recommended next action
 ```
 
+
+## Technology Stack Recommendation
+
+When to use: before choosing frontend, backend, database, cloud, eventing, AI, or platform technologies.
+
+Expected output: objective recommendation with alternatives, trade-offs, risks, and ADR requirement.
+
+Review focus: product fit, team fit, complexity, maintainability, scalability, security, operations, cost, ecosystem, and evolution path.
+
+```text
+Recommend a technology stack for [project/feature].
+
+Context:
+[paste product goals, functional requirements, NFRs, team capability, budget, timeline, expected scale, security requirements, and any user-preferred options]
+
+Do not simply follow my preferred choices. Challenge my assumptions. Compare alternatives. Recommend based on rationale, not preference. Treat user preference as input, not decision.
+
+Use this output format:
+1. User Preference
+2. Dumbledore Assessment
+3. Alternatives Considered
+4. Trade-off Table
+5. Decision
+6. Why This Decision
+7. What Would Change This Decision Later
+8. Risks
+9. ADR Required: Yes/No
+```
